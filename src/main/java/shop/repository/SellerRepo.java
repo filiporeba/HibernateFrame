@@ -6,4 +6,5 @@ import shop.model.Seller;
 
 @Repository
 public interface SellerRepo extends JpaRepository<Seller,Integer> {
+
 }

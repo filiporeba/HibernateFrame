@@ -1,13 +1,12 @@
 package shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import shop.model.Seller;
 import shop.repository.SellerRepo;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @Service
 public class SellerService {
@@ -17,22 +16,26 @@ public class SellerService {
     @Autowired
     public SellerService(SellerRepo sellerRepo) {
         this.sellerRepo = sellerRepo;
-        Seller seller = new Seller("Test","Test",33,33,"Test");
-        sellerRepo.save(seller);
     }
 
-    public Optional<Seller> showSellers() {
-        Optional<Seller> seller = sellerRepo.findById(1);
-        return seller;
+    public List<Seller> showSellers() {
+        return sellerRepo.findAll();
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init() {
-//        Seller seller = new Seller("Test","Test",33,33,"Test");
-//        sellerRepo.save(seller);
-//    }
+    public Seller getSellerById(Integer id) {
+        if(sellerRepo.findById(id).isPresent())
+            return sellerRepo.findById(id).get();
+        else
+            return null;
+    }
 
+    public void deleteSellerByID(Integer id){
+        sellerRepo.deleteById(id);
+    }
 
+    public Seller save(Seller seller){
+        return sellerRepo.save(seller);
+    }
 
 
 }
